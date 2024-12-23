@@ -38,5 +38,5 @@ The UberUber API provides the following endpoints:
 
 
 ## Contributors
-- [Dalia Nezzar](https://avatars.githubusercontent.com/u/113182098?v=4)
-- [Noah Nicolas](https://avatars.githubusercontent.com/u/53911681?v=4)
+- [<img src="https://avatars.githubusercontent.com/u/113182098?v=4">](https://github.com/dalia-nezzar)
+- [<img src="https://avatars.githubusercontent.com/u/53911681?v=4">](https://github.com/Witop-s)
