@@ -33,6 +33,7 @@ The UberUber API provides the following endpoints:
 ### Deliveries
 - `GET api/deliveries`: Get all deliveries
 - `GET api/deliveries/:id`: Get a delivery by ID
+- `GET api/deliveries/:id/lines` : Get all lines for a delivery by ID
 - `POST api/deliveries`: Create a new delivery
 - `PUT api/deliveries/:id/state`: Update a delivery state by ID
 

@@ -199,6 +199,22 @@ const app = new Elysia()
         }
     })
 
+    .get('/api/deliveries/:id/lines', async ({ params: { id } }) => {
+        const [rows] = await db.query<DriverRow[]>(
+            `SELECT d.*, dl.id_delivery 
+         FROM driver d
+         JOIN delivery_line dl ON d.id_driver = dl.id_driver
+         WHERE dl.id_delivery = ?`,
+            [id]
+        )
+
+        if (!rows.length) {
+            throw new Error('No delivery lines found for this delivery')
+        }
+
+        return rows
+    })
+
     .post('/api/deliveries', async ({ body }) => {
         const id = uuid()
         const { delivery_date, drivers, id_client } = body as any
