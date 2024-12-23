@@ -78,6 +78,21 @@ const app = new Elysia()
         return { id, firstname, lastname, email }
     })
 
+    .delete('/api/clients/:id', async ({ params: { id } }) => {
+        await db.query<ResultSetHeader>('DELETE FROM client WHERE id_client = ?', [id])
+        return { message: 'Client deleted' }
+    })
+
+    .get('/api/clients/:id/deliveries', async ({ params: { id } }) => {
+        const [rows] = await db.query<DeliveryRow[]>(
+            'SELECT * FROM delivery WHERE id_client = ?',
+            [id]
+        )
+        return rows
+    })
+
+
+
     // Routes Chauffeurs
     .get('/api/drivers', async () => {
         const [rows] = await db.query<DriverRow[]>('SELECT * FROM driver')
@@ -111,6 +126,24 @@ const app = new Elysia()
 
         return { id, firstname, lastname, email }
     })
+
+
+    .delete('/api/drivers/:id', async ({ params: { id } }) => {
+        await db.query<ResultSetHeader>('DELETE FROM driver WHERE id_driver = ?', [id])
+        return { message: 'Driver deleted' }
+    })
+
+    .get('/api/drivers/:id/deliveries', async ({ params: { id } }) => {
+        const [rows] = await db.query<DeliveryRow[]>(
+            `SELECT d.* FROM delivery d
+         JOIN delivery_line dl ON d.id_delivery = dl.id_delivery
+         WHERE dl.id_driver = ?`,
+            [id]
+        )
+        return rows
+    })
+
+
 
     // Routes Panier
     .get('/api/clients/:id/cart', async ({ params: { id } }) => {
