@@ -61,20 +61,20 @@ CREATE TABLE IF NOT EXISTS delivery_line(
 );
 
 -- Insertion des clients
-INSERT INTO client (id_client, firstname, lastname, email, birthdate, is_alive, allow_criminal_record, wants_extra_napkins) VALUES
-    ('CLI001', 'Jean-Michel', 'Prudent', 'jm.prudent@mail.com', '1980-05-15', true, false, true),
-    ('CLI002', 'Marie', 'Aventurière', 'marie.risk@mail.com', '1995-12-03', true, true, false),
-    ('CLI003', 'Philippe', 'Parano', 'phil.safe@mail.com', '1975-08-22', true, false, true),
-    ('CLI004', 'Sophie', 'Téméraire', 'sophie.brave@mail.com', '1992-03-30', true, true, false),
-    ('CLI005', 'Lucas', 'Indécis', 'lucas.maybe@mail.com', '1988-11-11', true, true, true);
+INSERT INTO client (id_client, firstname, lastname, email, birthdate, image_url,is_alive, allow_criminal_record, wants_extra_napkins) VALUES
+    ('CLI001', 'Jean-Michel', 'Prudent', 'jm.prudent@mail.com', '1980-05-15', 'https://randomuser.me/api/portraits/men/25.jpg',true, false, true),
+    ('CLI002', 'Marie', 'Aventurière', 'marie.risk@mail.com', '1995-12-03', 'https://randomuser.me/api/portraits/women/92.jpg',true, true, false),
+    ('CLI003', 'Philippe', 'Parano', 'phil.safe@mail.com', '1975-08-22', 'https://randomuser.me/api/portraits/men/27.jpg',true, false, true),
+    ('CLI004', 'Sophie', 'Téméraire', 'sophie.brave@mail.com', '1992-03-30', 'https://randomuser.me/api/portraits/women/35.jpg',true, true, false),
+    ('CLI005', 'Lucas', 'Indécis', 'lucas.maybe@mail.com', '1988-11-11', 'https://randomuser.me/api/portraits/men/41.jpg',true, true, true);
 
 -- Insertion des chauffeurs
-INSERT INTO driver (id_driver, firstname, lastname, email, price, has_criminal_record, has_driving_licence, days_since_last_accident, description) VALUES
-    ('DRV001', 'Pierre', 'Vitesse', 'pierre.speed@mail.com', 49.99, false, true, 365, 'Ancien pilote de F1, reconverti par nécessité'),
-    ('DRV002', 'Jacques', 'Danger', 'jacques.danger@mail.com', 29.99, true, false, 3, 'A vu tous les Fast & Furious 17 fois'),
-    ('DRV003', 'Martine', 'Prudence', 'martine.safe@mail.com', 39.99, false, true, 1825, 'N''a jamais dépassé les 50 km/h'),
-    ('DRV004', 'Robert', 'Mystère', 'robert.mystery@mail.com', 45.99, true, true, 42, 'Personne ne sait où il a eu son permis'),
-    ('DRV005', 'Lucie', 'Flash', 'lucie.flash@mail.com', 35.99, false, true, 730, 'Ancienne livreuse de pizza, spécialiste du timing');
+INSERT INTO driver (id_driver, firstname, lastname, email, price, image_url,has_criminal_record, has_driving_licence, days_since_last_accident, description) VALUES
+    ('DRV001', 'Pierre', 'Vitesse', 'pierre.speed@mail.com', 49.99, 'https://randomuser.me/api/portraits/men/3.jpg',false, true, 365, 'Ancien pilote de F1, reconverti par nécessité'),
+    ('DRV002', 'Jacques', 'Danger', 'jacques.danger@mail.com', 29.99, 'https://randomuser.me/api/portraits/men/63.jpg',true, false, 3, 'A vu tous les Fast & Furious 17 fois'),
+    ('DRV003', 'Martine', 'Prudence', 'martine.safe@mail.com', 39.99, 'https://randomuser.me/api/portraits/women/39.jpg',false, true, 1825, 'N''a jamais dépassé les 50 km/h'),
+    ('DRV004', 'Robert', 'Mystère', 'robert.mystery@mail.com', 45.99, 'https://randomuser.me/api/portraits/men/45.jpg',true, true, 42, 'Personne ne sait où il a eu son permis'),
+    ('DRV005', 'Lucie', 'Flash', 'lucie.flash@mail.com', 35.99, 'https://randomuser.me/api/portraits/women/69.jpg',false, true, 730, 'Ancienne livreuse de pizza, spécialiste du timing');
 
 -- Insertion des livraisons (deliveries)
 INSERT INTO delivery (id_delivery, delivery_date, total_price, state, id_client) VALUES
