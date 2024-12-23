@@ -156,18 +156,18 @@ const app = new Elysia()
         return rows
     })
 
-    .post('/api/clients/:clientId/cart/:driverId', async ({ params: { clientId, driverId } }) => {
+    .post('/api/clients/:id/cart/:driver_id', async ({ params: { id, driver_id } }) => {
         await db.query<ResultSetHeader>(
             'INSERT INTO cart_line (id_client, id_driver) VALUES (?, ?)',
-            [clientId, driverId]
+            [id, driver_id]
         )
         return { message: 'Driver added to cart' }
     })
 
-    .delete('/api/clients/:clientId/cart/:driverId', async ({ params: { clientId, driverId } }) => {
+    .delete('/api/clients/:id/cart/:driver_id', async ({ params: { id, driver_id } }) => {
         await db.query<ResultSetHeader>(
             'DELETE FROM cart_line WHERE id_client = ? AND id_driver = ?',
-            [clientId, driverId]
+            [id, driver_id]
         )
         return { message: 'Driver removed from cart' }
     })
