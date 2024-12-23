@@ -8,7 +8,7 @@
 This document provides the API documentation for the UberUber API made with Elysia. The UberUber API is a RESTful API that allows users to request 'rides' (or more so, deliveries) from drivers. The API provides endpoints for users to create, read, update, and delete clients, drivers, and deliveries. The API also provides endpoints for users to add and remove drivers from a client's cart, as well as update the state of a delivery.
 
 ## API Endpoints
-The UberUber API provides the following endpoints:
+The UberUber API provides the following endpoints: 
 
 ### Clients
 - `GET api/clients`: Get all clients
