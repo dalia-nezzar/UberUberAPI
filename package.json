@@ -6,7 +6,10 @@
     "dev": "bun run --watch src/index.ts"
   },
   "dependencies": {
-    "elysia": "latest"
+    "@types/uuid": "^10.0.0",
+    "elysia": "latest",
+    "mysql2": "^3.11.5",
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
     "bun-types": "latest"
