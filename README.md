@@ -38,5 +38,5 @@ The UberUber API provides the following endpoints:
 
 
 ## Contributors
-- [<img src="https://avatars.githubusercontent.com/u/113182098?v=4">](https://github.com/dalia-nezzar)
-- [<img src="https://avatars.githubusercontent.com/u/53911681?v=4">](https://github.com/Witop-s)
+[<img style="width:10%; border-radius:20%" src="https://avatars.githubusercontent.com/u/113182098?v=4">](https://github.com/dalia-nezzar)
+[<img style="width:10%; border-radius:20%" src="https://avatars.githubusercontent.com/u/53911681?v=4">](https://github.com/Witop-s)
