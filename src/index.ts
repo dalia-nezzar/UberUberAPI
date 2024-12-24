@@ -13,6 +13,7 @@ interface ClientRow extends RowDataPacket {
     lastname: string;
     email: string;
     birthdate: Date;
+    image_url: string;
     is_alive: boolean;
     allow_criminal_record: boolean;
     wants_extra_napkins: boolean;
@@ -25,6 +26,7 @@ interface DriverRow extends RowDataPacket {
     lastname: string;
     email: string;
     price: number;
+    image_url: string;
     has_criminal_record: boolean;
     has_driving_licence: boolean;
     days_since_last_accident: number;
