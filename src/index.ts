@@ -2,6 +2,9 @@ import { Elysia } from "elysia";
 import { db } from './database'
 import { v4 as uuid } from 'uuid'
 import { RowDataPacket, ResultSetHeader } from 'mysql2'
+import { swagger } from '@elysiajs/swagger'
+
+
 
 // Types pour les résultats MySQL
 interface ClientRow extends RowDataPacket {
@@ -51,6 +54,20 @@ const app = new Elysia()
         }), { status: code === 'NOT_FOUND' ? 404 : 500 })
     })
 
+    .use(
+        swagger(
+            {
+                documentation: {
+                    info: {
+                        title: 'UberUber API',
+                        description: 'API for UberUber, the Uber for Uber, to manage clients, drivers and deliveries.',
+                        version: '1.0.0'
+                    }
+                }
+            }
+        )
+    )
+
     // Routes Clients
     .get('/api/clients', async () => {
         const [rows] = await db.query<ClientRow[]>('SELECT * FROM client')
@@ -61,6 +78,20 @@ const app = new Elysia()
         const [rows] = await db.query<ClientRow[]>('SELECT * FROM client WHERE id_client = ?', [id])
         if (!rows[0]) throw new Error('Client not found')
         return rows[0]
+    })
+
+    .get('/api/clients/email/:email', async ({ params: { email } }) => {
+        const [rows] = await db.query<ClientRow[]>('SELECT * FROM client WHERE email = ?', [email])
+        if (!rows[0]) throw new Error('Client not found')
+        return rows[0]
+    })
+
+    .get('/api/clients/:id/deliveries', async ({ params: { id } }) => {
+        const [rows] = await db.query<DeliveryRow[]>(
+            'SELECT * FROM delivery WHERE id_client = ?',
+            [id]
+        )
+        return rows
     })
 
     .post('/api/clients', async ({ body }) => {
@@ -78,18 +109,26 @@ const app = new Elysia()
         return { id, firstname, lastname, email }
     })
 
+    .put('/api/clients/:id', async ({ params: { id }, body }) => {
+        const { firstname, lastname, email, birthdate, is_alive, allow_criminal_record, wants_extra_napkins } = body as any
+
+        await db.query<ResultSetHeader>(
+            `UPDATE client SET
+            firstname = ?, lastname = ?, email = ?, birthdate = ?,
+            is_alive = ?, allow_criminal_record = ?, wants_extra_napkins = ?
+            WHERE id_client = ?`,
+            [firstname, lastname, email, birthdate, is_alive, allow_criminal_record, wants_extra_napkins, id]
+        )
+
+        return { id, firstname, lastname, email }
+    })
+
     .delete('/api/clients/:id', async ({ params: { id } }) => {
         await db.query<ResultSetHeader>('DELETE FROM client WHERE id_client = ?', [id])
         return { message: 'Client deleted' }
     })
 
-    .get('/api/clients/:id/deliveries', async ({ params: { id } }) => {
-        const [rows] = await db.query<DeliveryRow[]>(
-            'SELECT * FROM delivery WHERE id_client = ?',
-            [id]
-        )
-        return rows
-    })
+
 
 
 
