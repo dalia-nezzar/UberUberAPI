@@ -256,6 +256,7 @@ const app = new Elysia()
         return rows
     })
 
+/*
     .post('/api/deliveries', async ({ body }) => {
         const id = uuid()
         const { delivery_date, drivers, id_client } = body as any
@@ -283,6 +284,57 @@ const app = new Elysia()
                 [driverId, id]
             )
         }
+
+        return { id, delivery_date, total_price, state: 'pending' }
+    })
+*/
+
+
+
+    // Post delivery by using current cart
+    .post('/api/deliveries', async ({ body }) => {
+        const id = uuid()
+        const { delivery_date, id_client } = body as any
+
+        // Get drivers from cart
+        const [cartRows] = await db.query<DriverRow[]>(
+            'SELECT id_driver FROM cart_line WHERE id_client = ?',
+            [id_client]
+        )
+
+        if (!cartRows.length) {
+            throw new Error('No drivers in cart')
+        }
+
+        // Calculer le prix total basé sur les chauffeurs sélectionnés
+        const [driverPrices] = await db.query<PriceSum[]>(
+            'SELECT SUM(price) as total FROM driver WHERE id_driver IN (?)',
+            [cartRows.map(row => row.id_driver)]
+        )
+        const total_price = driverPrices[0].total
+
+        // Créer la livraison
+        await db.query<ResultSetHeader>(
+            `INSERT INTO delivery (
+            id_delivery, delivery_date, total_price,
+            state, id_client
+        ) VALUES (?, ?, ?, 'pending', ?)`,
+            [id, delivery_date, total_price, id_client]
+        )
+
+        // Ajouter les lignes de livraison
+        for (const { id_driver } of cartRows) {
+            await db.query<ResultSetHeader>(
+                'INSERT INTO delivery_line (id_driver, id_delivery) VALUES (?, ?)',
+                [id_driver, id]
+            )
+        }
+
+        // Vider le panier
+        await db.query<ResultSetHeader>(
+            'DELETE FROM cart_line WHERE id_client = ?',
+            [id_client]
+        )
 
         return { id, delivery_date, total_price, state: 'pending' }
     })
