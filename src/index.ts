@@ -336,7 +336,7 @@ const app = new Elysia()
             [id_client]
         )
 
-        return { id, delivery_date, total_price, state: 'pending' }
+        return { id, delivery_date, total_price, state: 'En cours de validation' }
     })
 
     .put('/api/deliveries/:id/state', async ({ params: { id }, body }) => {
