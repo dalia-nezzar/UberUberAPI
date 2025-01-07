@@ -294,7 +294,8 @@ const app = new Elysia()
     // Post delivery by using current cart
     .post('/api/deliveries', async ({ body }) => {
         const id = uuid()
-        const { delivery_date, id_client } = body as any
+        const { id_client } = body as any
+        const delivery_date = new Date().toISOString().slice(0, 10)
 
         // Get drivers from cart
         const [cartRows] = await db.query<DriverRow[]>(
