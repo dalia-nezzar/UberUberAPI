@@ -198,11 +198,19 @@ const app = new Elysia()
     })
 
     .post('/api/clients/:id/cart/:driver_id', async ({ params: { id, driver_id } }) => {
-        await db.query<ResultSetHeader>(
-            'INSERT INTO cart_line (id_client, id_driver) VALUES (?, ?)',
+        const [rows] = await db.query<DriverRow[]>(
+            'SELECT * FROM cart_line WHERE id_client = ? AND id_driver = ?',
             [id, driver_id]
         )
-        return { message: 'Driver added to cart' }
+        if (rows.length) {
+            return { message: 'Driver already in cart' }
+        } else {
+            await db.query<ResultSetHeader>(
+                'INSERT INTO cart_line (id_client, id_driver) VALUES (?, ?)',
+                [id, driver_id]
+            )
+            return { message: 'Driver added to cart' }
+        }
     })
 
     .delete('/api/clients/:id/cart/:driver_id', async ({ params: { id, driver_id } }) => {
